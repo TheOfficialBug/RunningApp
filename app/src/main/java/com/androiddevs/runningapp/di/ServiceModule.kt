@@ -16,9 +16,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ServiceScoped
 import javax.inject.Singleton
 
-/**
- * ServiceModule, provides dependencies for the TrackingService
- */
 @Module
 @InstallIn(ServiceComponent::class)
 object ServiceModule {

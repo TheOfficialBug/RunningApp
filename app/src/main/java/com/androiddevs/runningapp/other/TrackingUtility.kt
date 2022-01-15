@@ -12,9 +12,6 @@ import java.util.concurrent.TimeUnit
 class TrackingUtility {
 
     companion object {
-        /**
-         * Checks if the user accepted the necessary location permissions or not
-         */
         fun hasLocationPermissions(context: Context): Boolean {
             return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 EasyPermissions.hasPermissions(
@@ -32,10 +29,6 @@ class TrackingUtility {
             }
         }
 
-        /**
-         * Takes an amount of milliseconds and converts it to a formatted string, optionally
-         * with milliseconds
-         */
         fun getFormattedStopWatchTime(ms: Long, includeMillis: Boolean = false): String {
             var milliseconds = ms
             val hours = TimeUnit.MILLISECONDS.toHours(milliseconds)
@@ -56,9 +49,6 @@ class TrackingUtility {
                     "${if (milliseconds < 10) "0" else ""}$milliseconds"
         }
 
-        /**
-         * Calculates the length of a specific polyline
-         */
         fun calculatePolylineLength(polyline: Polyline): Float {
             var distance = 0f
             for (i in 0..polyline.size - 2) {

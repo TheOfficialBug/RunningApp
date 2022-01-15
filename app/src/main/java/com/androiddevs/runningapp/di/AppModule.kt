@@ -17,9 +17,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Singleton
 
-/**
- * AppModule, provides application wide singletons
- */
 @Module
 @InstallIn(ApplicationComponent::class)
 object AppModule {
@@ -58,6 +55,4 @@ object AppModule {
     fun provideFirstTimeToggle(sharedPreferences: SharedPreferences) = sharedPreferences.getBoolean(
         KEY_FIRST_TIME_TOGGLE, true
     )
-
-
 }

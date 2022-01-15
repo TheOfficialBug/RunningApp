@@ -60,15 +60,9 @@ class TrackingService : LifecycleService() {
         val pathPoints = MutableLiveData<Polylines>()
     }
 
-    /**
-     * Base notification builder that contains the settings every notification will have
-     */
     @Inject
     lateinit var baseNotificationBuilder: NotificationCompat.Builder
 
-    /**
-     * Builder of the current notification
-     */
     private lateinit var curNotification: NotificationCompat.Builder
 
     @Inject
@@ -117,9 +111,6 @@ class TrackingService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    /**
-     * Stops the service properly.
-     */
     private fun killService() {
         serviceKilled = true
         isFirstRun = true
@@ -129,9 +120,6 @@ class TrackingService : LifecycleService() {
         stopSelf()
     }
 
-    /**
-     * Enables or disables location tracking according to the tracking state.
-     */
     @SuppressLint("MissingPermission")
     private fun updateLocationChecking(isTracking: Boolean) {
         if (isTracking) {
@@ -148,9 +136,6 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    /**
-     * Location Callback that receives location updates and adds them to pathPoints.
-     */
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult?) {
             super.onLocationResult(result)
@@ -170,9 +155,6 @@ class TrackingService : LifecycleService() {
     private var timeStarted = 0L // the time when we started the timer
     private var lastSecondTimestamp = 0L
 
-    /**
-     * Starts the timer for the tracking.
-     */
     private fun startTimer() {
         addEmptyPolyline()
         isTracking.postValue(true)
@@ -195,17 +177,11 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    /**
-     * Disables the timer and tracking.
-     */
     private fun pauseService() {
         isTimerEnabled = false
         isTracking.postValue(false)
     }
 
-    /**
-     * This adds the location to the last list of pathPoints.
-     */
     private fun addPathPoint(location: Location?) {
         location?.let {
             val pos = LatLng(location.latitude, location.longitude)
@@ -216,17 +192,11 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    /**
-     * Will add an empty polyline in the pathPoints list or initialize it if empty.
-     */
     private fun addEmptyPolyline() = pathPoints.value?.apply {
         add(mutableListOf())
         pathPoints.postValue(this)
     } ?: pathPoints.postValue(mutableListOf(mutableListOf()))
 
-    /**
-     * Starts this service as a foreground service and creates the necessary notification
-     */
     private fun startForegroundService() {
         Timber.d("TrackingService started.")
 
@@ -252,9 +222,6 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    /**
-     * Updates the action buttons of the notification
-     */
     private fun updateNotificationTrackingState(isTracking: Boolean) {
         val notificationActionText = if (isTracking) "Pause" else "Resume"
         val pendingIntent = if (isTracking) {

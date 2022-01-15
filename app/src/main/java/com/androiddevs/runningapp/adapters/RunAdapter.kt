@@ -25,8 +25,6 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
-
-    // ListDiffer to efficiently deal with changes in the RecyclerView
     val differ = AsyncListDiffer(this, diffCallback)
 
     inner class RunViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -49,6 +47,7 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
+
         // set item data
         holder.itemView.apply {
             Glide.with(this).load(run.img).into(ivRunImage)
